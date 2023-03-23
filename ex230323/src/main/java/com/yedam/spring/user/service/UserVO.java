@@ -1,0 +1,15 @@
+package com.yedam.spring.user.service;
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
+
+@Data
+public class UserVO {
+	private String name;
+	private Integer age;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date today;
+}

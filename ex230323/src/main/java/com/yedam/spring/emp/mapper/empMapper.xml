@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.spring.emp.mapper.EmpMapper">
+	<!-- 전체조회 -->
+	<select id="selectEmpAllList" resultType="EmpVO">
+		<!-- cId -> setCId() : cid로 인식 따라서 약어 한글자로 ㄴㄴ -->
+		SELECT employee_id, 
+			   first_name, 
+			   last_name,
+			   email,
+			   phone_number,
+			   hire_date,
+			   job_id,
+			   salary,
+			   commission_pct,
+			   manager_id,
+			   department_id
+		FROM employees
+		ORDER BY employee_id
+	</select>
+	<!-- 단건 조회 select에선 parameterType 생략이 국룰-->
+	<select id="selectEmpInfo" resultType="EmpVO">
+		SELECT employee_id, 
+			   first_name, 
+			   last_name,
+			   email,
+			   phone_number,
+			   hire_date,
+			   job_id,
+			   salary,
+			   commission_pct,
+			   manager_id,
+			   department_id
+		FROM employees
+		WHERE employee_id = #{ employeeId }
+		<!-- #{  } : PreparedStatement 0-> 0, Kang -> 'Kang' sql구문에 맞게 보내줌
+			 ${  } : 0 -> 0, Kang -> Kang 고대로 보냄 -->
+		ORDER BY employee_id
+	</select>
+	
+	<!-- 등록 paramterType 필수 resultType은 정수로 생략가능-->
+	<insert id="insertEmpInfo" parameterType="EmpVO">
+		<selectKey keyProperty="employeeId" resultType="int" order="BEFORE">
+			<!-- nvl쓰는 이유 처음으로 넣을 때 max값이 없는 경우(null) 대비 -->
+			SELECT NVL(MAX(employee_id),0) + 1 FROM employees		
+		</selectKey>
+		INSERT INTO employees (employee_id, first_name, last_name,email, hire_date, job_id, salary)					   
+					   VALUES (#{employeeId},#{firstName},#{lastName},#{email},sysdate,#{jobId},#{salary})
+	</insert>
+	
+	<!-- 수정 : 급여를 정해진 비율로 인상, 2개 이상의 매개변수 넘길 땐 paramterType 생략-->
+	<update id="updateEmpSal" >
+		UPDATE employees
+		SET salary = salary * (1 + #{raise}/100)
+		WHERE employee_id = #{empId}	
+	</update>
+	
+	<!-- 수정 : 사원 정보 수정 -->
+	<!-- 1) 모든 항목을 업데이트 진행, 단 모든항목에 정보가 들어가야 됨 -->
+	<!-- 2) Mybatis -> Dynamic SQL사용  -->
+	<update id="updateEmpInfo" parameterType="EmpVO">
+		UPDATE employees
+		<set>
+			<!-- Dynamic SQL 태그없는 set하면 if불만족해서 값 안 넣을 시 set만 남게 돼서 구문 오류 -->
+			<if test="firstName != null and !firstName.equals('')"> 
+			<!-- #{}안써도 됨 -->
+				first_name = #{firstName},
+			</if>
+			<if test="email != null and !firstName.equals('')"> 
+			<!-- #{}안써도 됨 -->
+				email = #{email},
+			</if>
+			<if test="salary > 0"> 
+			<!-- #{salary}안써도 됨 -->
+				salary = #{salary},
+			</if>
+		</set>
+		WHERE employee_id = #{employeeId}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteEmpInfo" parameterType="int">
+		DELETE 
+		FROM employees
+		WHERE employee_id = #{employeeId}
+	</delete>
+</mapper>  
+

@@ -14,7 +14,7 @@ public class EmpController {
 	EmpService empService;
 	
 	@RequestMapping("/getEmpInfo")
-	@ResponseBody
+	@ResponseBody //page를 리턴하는게 아닌 데이터에 대한 정보를 body에 출력
 	public EmpVO getEmpInfo(EmpVO empVO) {
 		return empService.getEmpInfo(empVO);
 	}
