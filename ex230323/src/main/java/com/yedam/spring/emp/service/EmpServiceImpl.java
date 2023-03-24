@@ -33,7 +33,7 @@ public class EmpServiceImpl implements EmpService {
 		// TODO Auto-generated method stub
 		int result = empMapper.insertEmpInfo(empVO);
 		
-		if(result == 0) {
+		if(result == 1) {
 			return empVO.getEmployeeId();
 		}else {
 			return -1;

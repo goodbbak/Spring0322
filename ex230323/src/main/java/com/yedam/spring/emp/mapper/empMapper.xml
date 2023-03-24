@@ -46,7 +46,7 @@
 			<!-- nvl쓰는 이유 처음으로 넣을 때 max값이 없는 경우(null) 대비 -->
 			SELECT NVL(MAX(employee_id),0) + 1 FROM employees		
 		</selectKey>
-		INSERT INTO employees (employee_id, first_name, last_name,email, hire_date, job_id, salary)					   
+		INSERT INTO employees (employee_id, first_name, last_name, email, hire_date, job_id, salary)					   
 					   VALUES (#{employeeId},#{firstName},#{lastName},#{email},sysdate,#{jobId},#{salary})
 	</insert>
 	

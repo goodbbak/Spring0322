@@ -28,7 +28,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:config/mybatis-config.xml"/>
 		<property name="mapperLocations" 
-			value="classpath*:com/yedam/spring/**/mampper/*Mapper.xml"/>
+			value="classpath*:com/yedam/spring/**/mapper/*Mapper.xml"/>
 	</bean>
 
 
