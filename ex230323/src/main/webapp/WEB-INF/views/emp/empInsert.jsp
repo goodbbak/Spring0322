@@ -10,7 +10,7 @@
 <body>
  	<!-- jsp파일에선 주석안의 태그도 인식 함 태그 넣으면 오류남 -->
 	<!-- ContextPath 1) c태그url 2) el --> <!-- empInsert(EmpVO empVO) EmpVO의 필드명이랑 input의 name이 같아야 됨 -->
-	<form action="${pageContext.request.contextPath}/empInsert" method="post">
+	<form action="${pageContext.request.contextPath}/empInsert" method="post"> 
 		<div>
 			<label>first_name : <input type="text" name="firstName"></label>
 		</div>

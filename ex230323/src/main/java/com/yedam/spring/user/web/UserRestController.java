@@ -78,7 +78,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping("/getEmpInfo/{employeeName}")
-	public UserVO getEmpInfo(@PathVariable String employeeName) {//경로에 데이터를 넣어서 보냄 데이터인지 경로인지 구분 못하고 어디에 들어갈 값인지 몰라서 보안에 유리
+	public UserVO getEmpInfo(@PathVariable String employeeName) {// @PathVariable 경로에 데이터를 넣어서 보냄 데이터인지 경로인지 구분 못하고 어디에 들어갈 값인지 몰라서 보안에 유리
 		UserVO userVO = new UserVO();
 		userVO.setName(employeeName);
 		
@@ -86,7 +86,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping("/getInfo")
-	public UserVO getInfo(@RequestBody UserVO userVO) {
+	public UserVO getInfo(@RequestBody UserVO userVO) { //@RequestBody json 형태로 받을 때
 		return userVO;
 	}
 	

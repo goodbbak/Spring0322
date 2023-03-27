@@ -11,7 +11,7 @@ public class EmpVO {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
-	private Date hireDate;
+	private Date hireDate; //java.util.Date => yyyy/MM/dd
 	private String jobId;
 	private double salary;
 	private double commissionPct;

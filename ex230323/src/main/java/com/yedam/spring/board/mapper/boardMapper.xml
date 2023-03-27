@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.spring.board.mapper.BoardMapper">
+	<!-- 전체조회 -->
+	<select id="selectBoardList" resultType="BoardVO">
+		SELECT  bno,
+				title,
+				contents,
+				writer,
+				regdate,
+				updatedate,
+				image	
+		FROM board
+		ORDER BY bno
+	</select>
+	<!-- 단건 조회 : 조건 1) 글번호 2) 작가  -->
+	<select id="selectBoard" resultType="BoardVO">
+		SELECT bno,
+				title,
+				contents,
+				writer,
+				regdate,
+				updatedate,
+				image	
+		FROM board
+		<where>
+			<if test='writer != null and !writer.equals("")'>
+				writer = #{writer} AND
+			</if>
+			<if test='bno > 0'>
+				bno = #{bno}
+			</if>
+		</where>
+	</select>
+	<!-- 입력될 게시글 번호 -->
+	<select id="getBoardNo" resultType="BoardVO">
+		SELECT NVL(MAX(bno),0) + 1 bno <!-- 별칭 안 해주면 BoardVO가 받을 수 없음 -->
+		FROM board
+	</select>
+	<!-- 등록 : 필수와 선택 구분 -->
+	<insert id="insertBoard" parameterType="BoardVO">
+		INSERT INTO board (
+						    bno
+						    , title
+						    , contents
+						    , writer
+						    <if test="regdate != null">
+							, regdate
+							</if>
+							<if test="updatedate != null">
+							, updatedate	
+							</if>
+							<if test="image != null and !images.equals('')">
+							, image
+							</if>
+						    )
+					VALUES (
+							#{bno}
+							, #{title}
+							, #{contents}
+							, #{writer}
+							<if test="regdate != null">
+							, #{regdate}
+							</if>
+							<if test="updatedate != null">
+							, #{updatedate}	
+							</if>
+							<if test="image != null and !images.equals('')"> <!-- String은 ''도 꼭 체크해주기 -->
+							, #{image}
+							</if>
+					)		    
+		
+	</insert>
+	<!-- 수정 : 대상 ( 제목, 내용, 이미지, 수정날짜 ) -->
+	<update id="updateBoard" parameterType="BoardVO">
+		UPDATE board
+		<set>
+			<if test="bno != null and !bno.equals('')">
+				SET bno = #{bno}
+			</if>
+			<if test="title != null and title.equals'')">
+				SET title = #{title}
+			</if>
+			<if test="contents != null and !contents.equals('')">
+				SET contents = #{contents}
+			</if>
+			<if test="writer != null and !writer.equals('')">
+				SET writer = #{writer}
+			</if>
+			<if test="regdate != null and !regdate.equals('')">
+				SET regdate = #{regdate}
+			</if>
+			<if test="updatedate != null and !updatedate.equals('')">
+				SET updatedate = #{updatedate}
+			</if>
+			<if test="image != null and !image.equals('')">
+				SET image = #{image}
+			</if>
+		</set>
+	</update>
+	<!-- 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		DELETE
+		FROM board
+		WHERE bno = #{BoardNo}
+	</delete>
+	
+</mapper>
