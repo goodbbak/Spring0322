@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yedam.spring.emp.mapper.EmpMapper;
+import com.yedam.spring.emp.service.EmpService;
+import com.yedam.spring.emp.service.EmpVO;
 
 @Service
 public class EmpServiceImpl implements EmpService {

@@ -10,7 +10,7 @@ public interface BoardMapper {
 	public List<BoardVO> selectBoardList();
 	
 	//단건조회
-	public BoardVO selctBoardInfo(BoardVO boardVO);
+	public BoardVO selectBoardInfo(BoardVO boardVO);
 	
 	//등록하고자 하는 글 번호
 	public BoardVO getBoardNo();

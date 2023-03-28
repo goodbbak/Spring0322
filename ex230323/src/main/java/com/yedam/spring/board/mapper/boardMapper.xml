@@ -16,7 +16,7 @@
 		ORDER BY bno
 	</select>
 	<!-- 단건 조회 : 조건 1) 글번호 2) 작가  -->
-	<select id="selectBoard" resultType="BoardVO">
+	<select id="selectBoardInfo" resultType="BoardVO">
 		SELECT bno,
 				title,
 				contents,
@@ -52,7 +52,7 @@
 							<if test="updatedate != null">
 							, updatedate	
 							</if>
-							<if test="image != null and !images.equals('')">
+							<if test="image != null and !image.equals('')">
 							, image
 							</if>
 						    )
@@ -67,7 +67,7 @@
 							<if test="updatedate != null">
 							, #{updatedate}	
 							</if>
-							<if test="image != null and !images.equals('')"> <!-- String은 ''도 꼭 체크해주기 -->
+							<if test="image != null and !image.equals('')"> <!-- String은 ''도 꼭 체크해주기 -->
 							, #{image}
 							</if>
 					)		    
@@ -77,29 +77,25 @@
 	<update id="updateBoard" parameterType="BoardVO">
 		UPDATE board
 		<set>
-			<if test="bno != null and !bno.equals('')">
-				SET bno = #{bno}
-			</if>
-			<if test="title != null and title.equals'')">
-				SET title = #{title}
+			<if test="title != null and !title.equals('')">
+				title = #{title},
 			</if>
 			<if test="contents != null and !contents.equals('')">
-				SET contents = #{contents}
-			</if>
-			<if test="writer != null and !writer.equals('')">
-				SET writer = #{writer}
-			</if>
-			<if test="regdate != null and !regdate.equals('')">
-				SET regdate = #{regdate}
-			</if>
-			<if test="updatedate != null and !updatedate.equals('')">
-				SET updatedate = #{updatedate}
+				contents = #{contents},
 			</if>
 			<if test="image != null and !image.equals('')">
-				SET image = #{image}
+				image = #{image},
+			</if>
+			<if test="updatedate != null">
+				updatedate = #{updatedate}
+			</if>
+			<if test="updatedate == null">
+				updatedate = sysdate
 			</if>
 		</set>
+		WHERE bno = #{bno}
 	</update>
+	
 	<!-- 삭제 -->
 	<delete id="deleteBoard" parameterType="int">
 		DELETE

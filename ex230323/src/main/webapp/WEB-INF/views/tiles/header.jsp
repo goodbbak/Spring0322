@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <nav>
-	<a href="">전체조회</a>
-	<a href="">등록</a>
+	<ul class="nav">
+		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/getBoardList">게시판</a></li>
+		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/boardInsert">게시글 등록</a></li>
+	</ul>
 </nav>
